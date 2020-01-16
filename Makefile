@@ -10,12 +10,8 @@ kernel-install:
 	@mkdir -p mount/
 	@mkdir -p mount-system/
 	@export ARCH=x86_64
-	guestmount -a environment/disk.qcow2 -o uid=`id -u` -o gid=`id -g` -m /dev/sda1 mount/
-	guestmount -a mount/android-current/system.img -o uid=`id -u` -o gid=`id -g` -i mount-system/
+	guestmount -a environment/disk.qcow2 -o uid=`id -u` -o gid=`id -g` -m /dev/sda2 mount/
 	$(MAKE) -C kernel install INSTALL_PATH=`pwd`/mount/boot/
-	$(MAKE) -C kernel modules_install INSTALL_MOD_PATH=`pwd`/mount-system/
-	guestunmount mount-system/ &
-	@inotifywait -e close mount/android-current/system.img > /dev/null
 	guestunmount mount/ &
 	@inotifywait -e close environment/disk.qcow2 > /dev/null
 
