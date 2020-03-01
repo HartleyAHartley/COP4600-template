@@ -40,3 +40,6 @@ bootstrap:
 	sudo chattr +C environment
 	cp -r temp/* environment/
 	rm -rf temp/
+
+sync:
+	$(MAKE) -C test sync
